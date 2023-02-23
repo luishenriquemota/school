@@ -5,6 +5,7 @@ export const CardCourseStyle = styled.li`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  color: black;
 
   h1{
     font-size: 18px;

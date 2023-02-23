@@ -1,6 +1,5 @@
-import { Header } from "./components/header"
 import {RouterProvider} from "react-router-dom";
-import { Router } from './pages/LandingPage/routes';
+import { Router } from './routes';
 
 
 function App() {
