@@ -13,9 +13,9 @@ export function Courses(){
 
   return (
     <CoursesStyle className="container">
-      <h2>Cursos para voce</h2>
+      <h2>Cursos em alta</h2>
       <ul>
-        {courses.map((item, index) => <CardCourse key={index} name={item.name} description={item.description} teacher={item.teacher}/>)}
+        {courses.map((item, index) => <CardCourse key={index} name={item.name} description={item.description} teacher={item.teacher} id={item.id}/>)}
       </ul>
 
     </CoursesStyle>

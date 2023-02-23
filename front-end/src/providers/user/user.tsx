@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction, useContext, useState} from "react"
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState} from "react"
 import { IChildren, ILogin, IUserRequest } from "../../interfaces"
 import { api } from "../../services/api"
 import { toast } from "react-hot-toast"
@@ -24,6 +24,11 @@ export function UserContextProvider({children}: IChildren){
   const [redirectToHome, setRedirectToHome] = useState<boolean>(false)
 
 
+useEffect(() => {
+  
+  getToken()
+}, [])
+
 
   function createUser(data: IUserRequest){
     api.post("api/user/", data)
@@ -37,6 +42,7 @@ export function UserContextProvider({children}: IChildren){
     })
   }
 
+  
   function createUserTeacher(data: IUserRequest){
     api.post("/api/user/teacher/", data)
     .then(res => {
@@ -50,15 +56,19 @@ export function UserContextProvider({children}: IChildren){
 
   function login(data: ILogin){
     api.post("/api/user/login/", data).then(res => {
-      setToken(res.data.token)
       toast.success("Login realizado.")
-      localStorage.setItem("@Token", res.data.token)
+      localStorage.setItem("@Token", JSON.stringify(res.data.token))
+      getToken()
       setRedirectToHome(true)
     })
     .catch(err => {
       toast.error("Algo deu errado, tente novamente.")
       setRedirectToHome(false)
     })
+  }
+
+  function getToken(){
+    setToken(JSON.parse(localStorage.getItem("@Token")!))
   }
 
   return (

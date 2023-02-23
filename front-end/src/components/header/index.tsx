@@ -1,34 +1,24 @@
 import { HeaderContentStyle, HeaderStyle } from "./style";
 
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
-import LoginIcon from '@mui/icons-material/Login';
-
 import {useNavigate} from "react-router-dom"
-import { api } from "../../services/api";
 import { useUser } from "../../providers/user/user";
 
 export function Header(){
 
- 
+  const navigate = useNavigate()
 
   return (
     <HeaderStyle>
       <div className="container">
         <HeaderContentStyle>
-          <h1>Logo</h1>
-          <input type="text" placeholder="Pesquisar curso" />
+          <h1 onClick={() => navigate("/home")}>Logo</h1>
           <AccountMenu/>
         </HeaderContentStyle>
       </div>
@@ -60,6 +50,7 @@ const handler = (e: React.MouseEvent<HTMLElement>) => {
 }
 
   const handlerLogout = () => {
+    localStorage.clear()
     setToken("")
     navigate("/")
   }
@@ -101,27 +92,25 @@ const handler = (e: React.MouseEvent<HTMLElement>) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+      {token ? 
+        <div>
+        <MenuItem onClick={() => navigate("/home/my_courses/learning")}> 
+        Meu aprendizado
+      </MenuItem>
+        <MenuItem onClick={() => handlerLogout()}>
+        Logout
+      </MenuItem>
+      </div>
+      :
+      <div>
         <MenuItem id="login" onClick={(e) => handler(e)}>
           <Avatar /> Login
         </MenuItem>
         <MenuItem id="register" onClick={(e) => handler(e)}>
           <Avatar /> Cadastre-se
         </MenuItem>
-        {token ? 
-        <>
-          <Divider />
-          <MenuItem onClick={() => handlerLogout()}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-        </>
-        :
-        null
-        }
-        {/* */}
-       
+      </div>
+      }       
       </Menu>
     </React.Fragment>
   );

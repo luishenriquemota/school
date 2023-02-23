@@ -1,10 +1,11 @@
 
 import {createBrowserRouter, Navigate} from "react-router-dom";
-import { Header } from "../../../components/header";
-import { Home } from "../../home";
-import { LandingPage } from "..";
-import { LoginPage } from "../../login-page";
-import { RegisterPage } from "../../register-page";
+import { Header } from "../components/header";
+import { Home } from "../pages/home";
+import { LandingPage } from "../pages/LandingPage";
+import { LearningPage } from "../pages/learningPage/indext";
+import { LoginPage } from "../pages/login-page";
+import { RegisterPage } from "../pages/register-page" ;
 
 
 const auth = true
@@ -43,5 +44,9 @@ export const Router = createBrowserRouter([
         element: <Header/>
       }
     ]
+  },
+  {
+    path: "/home/my_courses/learning",
+    element: <LearningPage/>
   }
 ]);
